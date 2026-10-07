@@ -1,6 +1,7 @@
+package modelo;
 import java.util.ArrayList;
 
-class Cocina {
+public class Cocina {
     private ArrayList<Orden> ordenes;
     private static final int LIMITE_PEDIDOS = 5;
 

@@ -1,3 +1,5 @@
+package modelo;
+
 public class Orden {
     private int id;
     private String cliente;
@@ -29,12 +31,14 @@ public class Orden {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getCliente() {
         return cliente;
+    }
+    public Salsa getSalsa() {
+        return salsa;
+    }
+    public Toppings getToppings() {
+        return toppings;
     }
 
     
@@ -43,6 +47,19 @@ public class Orden {
     }
     public void setPendiente(boolean pendiente) {
         this.pendiente = pendiente;
+    }
+
+    public void setMasa(Masas masa) {
+        this.masa = masa;
+    }
+    public void setToppings(Toppings toppings) {
+        this.toppings = toppings;
+    }
+    public void setSalsa(Salsa salsa) {
+        this.salsa = salsa;
+    }
+        public void setId(int id) {
+        this.id = id;
     }
 
     @Override

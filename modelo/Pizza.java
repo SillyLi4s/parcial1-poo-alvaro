@@ -1,3 +1,5 @@
+package modelo;
+
 public class Pizza {
     private Masas masa;
     private Toppings toppings;
@@ -8,6 +10,8 @@ public class Pizza {
     public Pizza(Orden ordenAsociada) {
         this.ordenAsociada = ordenAsociada;
         this.masa = ordenAsociada.getMasa();
+        this.salsa = ordenAsociada.getSalsa();
+        this.toppings = ordenAsociada.getToppings();
         this.lista = false;
     }
 

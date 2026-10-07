@@ -1,4 +1,12 @@
+
 import java.util.Scanner;
+
+import modelo.Cocina;
+import modelo.Masas;
+import modelo.Orden;
+import modelo.Pizza;
+import modelo.Salsa;
+import modelo.Toppings;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,9 +36,43 @@ public class Main {
                     String cliente = scanner.nextLine();
                     System.out.print("Número de mesa: ");
                     int mesa = scanner.nextInt();
-                    
+                    System.out.print("Tipo de Masa (Delgada = 1 | Esponjosa = 2): ");
+                    int sc_masa = scanner.nextInt();
+                    System.out.print("¿Qué topping desea? (Pepperoni = 1 | Jamón = 2 | Chile Pimiento = 3 | Tocino = 4): ");
+                    int sc_topping  = scanner.nextInt();
+                    System.out.print("Tipo de Salsa (Normal = 1 | Picante = 2 | Cheddar = 3 | BBQ = 4): ");
+                    int sc_salsa  = scanner.nextInt();
+
                     Orden nuevaOrden = new Orden(cliente, mesa, Masas.DELGADA, Toppings.PEPPERONI, Salsa.NORMAL);
                     nuevaOrden.setId(contadorIds);
+
+                    if (sc_masa == 2) {
+                        nuevaOrden.setMasa(Masas.ESPONJOSA);
+                    } else {
+                        nuevaOrden.setMasa(Masas.DELGADA);
+                    }
+
+                    if (sc_topping == 2) {
+                        nuevaOrden.setToppings(Toppings.JAMON);
+                    } else if (sc_topping == 3) {
+                        nuevaOrden.setToppings(Toppings.CHILEPIMIENTO);
+                    } else if (sc_topping == 4) {
+                        nuevaOrden.setToppings(Toppings.TOCINO);
+                    } else {
+                        nuevaOrden.setToppings(Toppings.PEPPERONI);
+                    }
+
+                    if (sc_salsa == 2) {
+                        nuevaOrden.setSalsa(Salsa.PICANTE);
+                    } else if (sc_salsa == 3) {
+                        nuevaOrden.setSalsa(Salsa.CHEDDAR);
+                    } else if (sc_salsa == 4) {
+                        nuevaOrden.setSalsa(Salsa.BBQ);
+                    } else {
+                        nuevaOrden.setSalsa(Salsa.NORMAL);
+                    }
+
+
                     
                     if (cocina.agregarOrden(nuevaOrden)) {
                         contadorIds++; // incrementar solo si se puede
@@ -56,6 +98,11 @@ public class Main {
                         System.out.println("\nESTADO DE LA ORDEN:");
                         System.out.println(ordenEncontrada.toString());
                         
+                        System.out.println("🍕 Detalles de la Pizza:");
+                        System.out.println("   - Masa: " + ordenEncontrada.getMasa());
+                        System.out.println("   - Topping: " + ordenEncontrada.getToppings());
+                        System.out.println("   - Salsa: " + ordenEncontrada.getSalsa());
+
                         // Pequeña opción extra para marcar la pizza como lista
                         if (ordenEncontrada.isPendiente()) {
                             System.out.print("¿Desea marcar este pedido como LISTO? (S/N): ");

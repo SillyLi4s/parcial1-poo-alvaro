@@ -1,4 +1,5 @@
-enum Toppings {
+package modelo;
+public enum Toppings {
     PEPPERONI,
     JAMON,
     CHILEPIMIENTO,
