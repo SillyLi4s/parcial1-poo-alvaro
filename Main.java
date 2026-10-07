@@ -15,7 +15,7 @@ public class Main {
         int contadorIds = 1;
         boolean salir = false;
 
-        System.out.println("🍕 PIZZERÍA 🍕");
+        System.out.println(" PIZZERÍA ");
 
         while (!salir) {
             System.out.println("\n--- MENÚ PRINCIPAL ---");
@@ -98,7 +98,7 @@ public class Main {
                         System.out.println("\nESTADO DE LA ORDEN:");
                         System.out.println(ordenEncontrada.toString());
                         
-                        System.out.println("🍕 Detalles de la Pizza:");
+                        System.out.println(" Detalles de la Pizza:");
                         System.out.println("   - Masa: " + ordenEncontrada.getMasa());
                         System.out.println("   - Topping: " + ordenEncontrada.getToppings());
                         System.out.println("   - Salsa: " + ordenEncontrada.getSalsa());
