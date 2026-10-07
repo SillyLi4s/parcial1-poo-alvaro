@@ -1,0 +1,5 @@
+
+enum Masas {
+    DELGADA,
+    ESPONJOSA
+}
