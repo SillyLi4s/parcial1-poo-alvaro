@@ -1,4 +1,3 @@
-
 enum Salsa {
     NORMAL,
     PICANTE,

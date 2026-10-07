@@ -3,18 +3,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Cocina cocina = new Cocina();
+        int contadorIds = 1;
         boolean salir = false;
-        
-        int[] arregloOrdenes = new int[10]; 
 
-        System.out.println("--- GESTIÓN DE PIZZERÍA (UML ESTRICTO) ---");
+        System.out.println("🍕 PIZZERÍA 🍕");
 
         while (!salir) {
-            System.out.println("\n--- Menú Principal ---");
+            System.out.println("\n--- MENÚ PRINCIPAL ---");
             System.out.println("1. Crear pedido");
             System.out.println("2. Quitar pedido");
             System.out.println("3. Ver estado de un pedido");
-            System.out.println("4. Salir");
+            System.out.println("4. Ver todos los pedidos en cocina");
+            System.out.println("5. Salir");
             System.out.print("Seleccione una opción: ");
             
             int opcion = scanner.nextInt();
@@ -22,51 +23,64 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    System.out.print("Ingrese nombre del cliente: ");
+                    System.out.println("\n--- NUEVO PEDIDO ---");
+                    System.out.print("Nombre del cliente: ");
                     String cliente = scanner.nextLine();
+                    System.out.print("Número de mesa: ");
+                    int mesa = scanner.nextInt();
                     
-                    // Estos fallarán por ser métodos privados
-                    Orden nuevaOrden = new Orden(cliente, Masas.DELGADA, Toppings.PEPPERONI, Salsa.NORMAL);
-                    nuevaOrden.setId(1);
-                    nuevaOrden.pendiente = true;
-
-                    Pizza nuevaPizza = new Pizza(Masas.DELGADA, Toppings.PEPPERONI, Salsa.NORMAL, nuevaOrden);
-                    Cocina cocina = new Cocina(nuevaOrden, nuevaPizza);
+                    Orden nuevaOrden = new Orden(cliente, mesa, Masas.DELGADA, Toppings.PEPPERONI, Salsa.NORMAL);
+                    nuevaOrden.setId(contadorIds);
                     
-                    String resultado = cocina.agregarOrden(arregloOrdenes, nuevaOrden);
-                    System.out.println(">>> " + resultado);
+                    if (cocina.agregarOrden(nuevaOrden)) {
+                        contadorIds++; // incrementar solo si se puede
+                    }
                     break;
 
                 case 2:
-                    System.out.println("Procesando eliminación de pedido...");
-                    Orden ordenARemover = new Orden("Dummy", Masas.ESPONJOSA, Toppings.JAMON, Salsa.BBQ);
-                    Cocina cocinaRemover = new Cocina(ordenARemover, null);
-                    
-                    cocinaRemover.quitarOrden(arregloOrdenes, ordenARemover);
-                    System.out.println(">>> Pedido eliminado exitosamente.");
+                    System.out.print("\nIngrese el ID de la orden que desea quitar: ");
+                    int idQuitar = scanner.nextInt();
+                    if (cocina.quitarOrden(idQuitar)) {
+                        System.out.println("Pedido #" + idQuitar + " eliminado correctamente de la cocina.");
+                    } else {
+                        System.out.println("No se encontró ninguna orden con el ID #" + idQuitar);
+                    }
                     break;
 
                 case 3:
-                    System.out.println("Consultando estado del pedido...");
-                    Orden ordenEstado = new Orden("Dummy", Masas.DELGADA, Toppings.CHILEPIMIENTO, Salsa.CHEDDAR);
-                    Pizza pizzaEstado = new Pizza(ordenEstado);
-                    Cocina cocinaEstado = new Cocina(ordenEstado, pizzaEstado);
+                    System.out.print("\nIngrese el ID de la orden a consultar: ");
+                    int idEstado = scanner.nextInt();
+                    Orden ordenEncontrada = cocina.buscarOrden(idEstado);
                     
-                    boolean estado = cocinaEstado.esOrdenLista(pizzaEstado, ordenEstado, pizzaEstado);
-                    if (estado) {
-                        System.out.println(">>> El pedido ESTÁ LISTO.");
+                    if (ordenEncontrada != null) {
+                        System.out.println("\nESTADO DE LA ORDEN:");
+                        System.out.println(ordenEncontrada.toString());
+                        
+                        // Pequeña opción extra para marcar la pizza como lista
+                        if (ordenEncontrada.isPendiente()) {
+                            System.out.print("¿Desea marcar este pedido como LISTO? (S/N): ");
+                            String resp = scanner.next();
+                            if (resp.equalsIgnoreCase("s")) {
+                                Pizza p = new Pizza(ordenEncontrada);
+                                p.marcarComoLista();
+                                System.out.println("El pedido esta listo para servir");
+                            }
+                        }
                     } else {
-                        System.out.println(">>> El pedido AÚN NO ESTÁ LISTO.");
+                        System.out.println("No se encontró ninguna orden con el ID #" + idEstado);
                     }
                     break;
 
                 case 4:
-                    System.out.println("Saliendo del sistema...");
+                    cocina.mostrarPedidosActuales();
+                    break;
+
+                case 5:
                     salir = true;
                     break;
 
                 default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println("Opción no válida.");
             }
         }
         scanner.close();

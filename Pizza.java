@@ -2,24 +2,18 @@ public class Pizza {
     private Masas masa;
     private Toppings toppings;
     private Salsa salsa;
-    private Orden idOrden;
+    private Orden ordenAsociada;
     private boolean lista;
 
-    private Pizza(Masas masa, Toppings toppings, Salsa salsa, Orden idOrden) {
-        this.masa = masa;
-        this.toppings = toppings;
-        this.salsa = salsa;
-        this.idOrden = idOrden;
+    public Pizza(Orden ordenAsociada) {
+        this.ordenAsociada = ordenAsociada;
+        this.masa = ordenAsociada.getMasa();
+        this.lista = false;
     }
 
-    private Pizza(Masas masa, Salsa salsa, Orden idOrden) {
-        this.masa = masa;
-        this.salsa = salsa;
-        this.idOrden = idOrden;
-    }
-
-    private Pizza(Orden idOrden) {
-        this.idOrden = idOrden;
+    public void marcarComoLista() {
+        this.lista = true;
+        this.ordenAsociada.setPendiente(false);
     }
 
     public boolean estaLista() {
